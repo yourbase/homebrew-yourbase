@@ -23,11 +23,11 @@ class Yb < Formula
   head "https://github.com/yourbase/yb.git"
 
   depends_on "go" => :build
-  depends_on "docker" => :recommend
+  depends_on "docker" => :recommended
 
   def install
     ENV["GITHUB_SHA"] = "ece75fa01ca1635667f651a588af371b6baed352"
-    ENV["VERSION"] = 'v' + version.to_s
+    ENV["VERSION"] = "v" + version.to_s
     ENV["GO111MODULE"] = "on"
     system "./build.sh", bin/"yb"
   end
