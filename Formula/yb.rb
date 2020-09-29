@@ -26,13 +26,16 @@ class Yb < Formula
   depends_on "docker" => :recommended
 
   def install
-    ENV["GITHUB_SHA"] = "ece75fa01ca1635667f651a588af371b6baed352"
     ENV["VERSION"] = "v" + version.to_s
+    ENV["CHANNEL"] = version.include?("-") ? "preview" : "stable"
+    ENV["GITHUB_SHA"] = "ece75fa01ca1635667f651a588af371b6baed352"
     ENV["GO111MODULE"] = "on"
     system "./build.sh", bin/"yb"
   end
 
   test do
-    assert_match "0.3.0", shell_output("#{bin}/yb --version")
+    version_info = shell_output("#{bin}/yb version")
+    assert_match "0.3.0", version_info
+    assert_match "stable|preview", version_info
   end
 end
