@@ -27,7 +27,7 @@ class Yb < Formula
 
   def install
     ENV["VERSION"] = "v" + version.to_s
-    ENV["CHANNEL"] = version.include?("-") ? "preview" : "stable"
+    ENV["CHANNEL"] = version.to_s.include?("-") ? "preview" : "stable"
     ENV["GITHUB_SHA"] = "ece75fa01ca1635667f651a588af371b6baed352"
     ENV["GO111MODULE"] = "on"
     system "./build.sh", bin/"yb"
