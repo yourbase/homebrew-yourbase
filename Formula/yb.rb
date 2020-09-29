@@ -36,6 +36,6 @@ class Yb < Formula
   test do
     version_info = shell_output("#{bin}/yb version")
     assert_match "0.3.0", version_info
-    assert_match "stable|preview", version_info
+    assert_match /stable|preview/, version_info
   end
 end
