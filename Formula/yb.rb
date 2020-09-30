@@ -23,7 +23,7 @@ class Yb < Formula
   head "https://github.com/yourbase/yb.git"
 
   depends_on "go" => :build
-  depends_on "docker" => :recommended
+  depends_on "docker" => :optional
 
   def install
     ENV["VERSION"] = "v" + version.to_s
