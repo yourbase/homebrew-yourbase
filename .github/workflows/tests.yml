@@ -22,10 +22,7 @@ on:
     branches: main
 jobs:
   test-bot:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macOS-latest]
+    runs-on: macOS-latest
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
