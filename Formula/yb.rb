@@ -30,7 +30,7 @@ class Yb < Formula
     ENV["CHANNEL"] = version.to_s.include?("-") ? "preview" : "stable"
     ENV["GITHUB_SHA"] = "bcb59daddb89c34d71ea92161bc15ab2abedc9db"
     ENV["GO111MODULE"] = "on"
-    system "./build.sh", bin/"yb"
+    system "release/build.sh", bin/"yb"
   end
 
   test do
