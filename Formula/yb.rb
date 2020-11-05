@@ -17,8 +17,8 @@
 class Yb < Formula
   desc "Build tool optimized for local + remote development"
   homepage "https://yourbase.io/"
-  url "https://github.com/yourbase/yb/archive/v0.4.3.tar.gz"
-  sha256 "14c5f8e8eb1489f337b642a489bd6e93e5edcbe95b107d9bc0a21a52d7d9eafd"
+  url "https://github.com/yourbase/yb/archive/v0.4.4.tar.gz"
+  sha256 "492d7f260c39a25f48fb8087f42e14ccf0af25625eb05413a6034fcf6a9b9ac4"
   license "Apache-2.0"
   head "https://github.com/yourbase/yb.git"
 
@@ -28,14 +28,14 @@ class Yb < Formula
   def install
     ENV["VERSION"] = "v" + version.to_s
     ENV["CHANNEL"] = version.to_s.include?("-") ? "preview" : "stable"
-    ENV["GITHUB_SHA"] = "ef5e20dd4656873551c330ac9c9d790e96bb93a8"
+    ENV["GITHUB_SHA"] = "3cbe9146014d292995f2aaa8310147fab28e9abc"
     ENV["GO111MODULE"] = "on"
     system "release/build.sh", bin/"yb"
   end
 
   test do
     version_info = shell_output("#{bin}/yb version")
-    assert_match "0.4.3", version_info
+    assert_match "0.4.4", version_info
     assert_match /stable|preview/, version_info
   end
 end
