@@ -17,6 +17,7 @@
 module.exports = async ({github, context}) => {
   const owner = 'yourbase';
   const repo = 'homebrew-yourbase';
+  const tag = context.payload.inputs.tag;
   const branchRefPrefix = 'refs/heads/';
   if (!context.ref.startsWith(branchRefPrefix)) {
     throw new Error('Cannot create pull request for ' + context.ref);
@@ -25,8 +26,9 @@ module.exports = async ({github, context}) => {
   const createPrResult = await github.pulls.create({
     owner,
     repo,
-    head: 'bump-' + context.payload.inputs.tag,
+    head: 'bump-' + tag,
     base: branchName,
+    title: 'Bump yb version to ' + tag,
     maintainer_can_modify: true
   });
   console.log('Created ' + createPrResult.html_url);
