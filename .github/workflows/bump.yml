@@ -47,7 +47,7 @@ jobs:
             }
           }`;
           const variables = {
-            tagName: "${github.event.inputs.tag}"
+            tagName: context.payload.inputs.tag
           };
           console.log('Searching for ' + variables.tagName);
           const result = await github.graphql(query, variables);
@@ -67,7 +67,7 @@ jobs:
     - name: Make edits
       run: go run ./.github/scripts/editformula -tag=${github.event.inputs.tag} -commit=${steps.tag_commit.outputs.result}
     - name: Commit changes
-      run: git commit -a -m "Bump to ${github.event.inputs.tag}"
+      run: git commit -a -m "Bump yb version to ${github.event.inputs.tag}"
     - name: Push changes to branch
       run: "git push origin HEAD:bump-${github.event.inputs.tag}"
 
