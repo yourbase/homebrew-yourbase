@@ -1,0 +1,72 @@
+# Copyright 2020 YourBase Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: Bump Version
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: yb version tag
+        required: true
+jobs:
+  create_pr:
+    name: Create PR
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get tag commit
+      id: tag_commit
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        result-encoding: string
+        script: |
+          const query = `query($tagName: String!) { 
+            repository(owner: "yourbase", name: "yb") {
+              release(tagName: $tagName) {
+                tag {
+                  target {
+                    __typename
+                    ... on Commit { oid }
+                    ... on Tag { target { oid } }
+                  }
+                }
+              }
+            }
+          }`;
+          const variables = {
+            tagName: "${github.event.inputs.tag}"
+          };
+          const result = await github.graphql(query, variables);
+          const target = result.repository.release.tag.target;
+          if (target.__typename === 'Tag') {
+            return target.target.oid;
+          }
+          return result.oid;
+    - name: Download Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '^1.15.6'
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Make new branch
+      run: git checkout -b bump-${github.event.inputs.tag}
+    - name: Make edits
+      run: go run ./.github/scripts/editformula -tag=${github.event.inputs.tag} -commit=${steps.tag_commit.outputs.result}
+    - name: Commit changes
+      run: git commit -a -m "Bump to ${github.event.inputs.tag}"
+    - name: Push changes to branch
+      run: "git push origin HEAD:bump-${github.event.inputs.tag}"
+
