@@ -20,7 +20,7 @@ class Yb < Formula
   url "https://github.com/yourbase/yb/archive/v0.5.5.tar.gz"
   sha256 "aae1cb023ff9007a688b2e02bd2f64973a9a40f6b96e0e308fcb1e9c3b0b6891"
   license "Apache-2.0"
-  head "https://github.com/yourbase/yb.git"
+  head "https://github.com/yourbase/yb.git", :branch => "main"
 
   depends_on "go" => :build
   depends_on "docker" => :optional
