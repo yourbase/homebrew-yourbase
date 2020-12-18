@@ -49,6 +49,7 @@ jobs:
           const variables = {
             tagName: "${github.event.inputs.tag}"
           };
+          console.log('Searching for ' + variables.tagName);
           const result = await github.graphql(query, variables);
           const target = result.repository.release.tag.target;
           if (target.__typename === 'Tag') {
