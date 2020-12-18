@@ -65,7 +65,7 @@ jobs:
     - name: Make new branch
       run: git checkout -b bump-${{github.event.inputs.tag}}
     - name: Make edits
-      run: go run ./.github/scripts/editformula -tag='${{github.event.inputs.tag}}' -commit=${steps.tag_commit.outputs.result}
+      run: go run ./.github/scripts/editformula -tag='${{github.event.inputs.tag}}' -commit=${{steps.tag_commit.outputs.result}}
     - name: Commit changes
       run: git commit -a -m 'Bump yb version to ${{github.event.inputs.tag}}'
     - name: Push changes to branch
