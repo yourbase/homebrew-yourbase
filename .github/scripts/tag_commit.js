@@ -37,5 +37,5 @@ module.exports = async ({github, context}) => {
   if (target.__typename === 'Tag') {
     return target.target.oid;
   }
-  return result.oid;
+  return target.oid;
 };
