@@ -25,6 +25,8 @@ class Yb < Formula
   depends_on "go" => :build
   depends_on "docker" => :optional
 
+  conflicts_with "yb-preview", because: "yb-preview and yb both provide a yb binary"
+
   def install
     ENV["VERSION"] = "v" + version.to_s
     ENV["CHANNEL"] = version.to_s.include?("-") ? "preview" : "stable"
