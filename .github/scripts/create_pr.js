@@ -23,7 +23,7 @@ module.exports = async ({github, context}) => {
     throw new Error('Cannot create pull request for ' + context.ref);
   }
   const branchName = context.ref.substring(branchRefPrefix.length);
-  const createPrResult = await github.pulls.create({
+  const { data: createPrResult } = await github.pulls.create({
     owner,
     repo,
     head: 'bump-' + tag,
