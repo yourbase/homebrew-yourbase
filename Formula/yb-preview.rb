@@ -20,7 +20,7 @@ class YbPreview < Formula
   url "https://github.com/yourbase/yb/archive/v0.6.0-beta1.tar.gz"
   sha256 "98efb88ef74b85ad0aded32b75222f7bcd915056f0da4cefdad50b1bd8ccfddf"
   license "Apache-2.0"
-  head "https://github.com/yourbase/yb.git", :branch => "main"
+  head "https://github.com/yourbase/yb.git", branch: "main"
 
   depends_on "go" => :build
   depends_on "docker" => :optional
