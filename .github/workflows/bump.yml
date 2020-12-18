@@ -67,6 +67,9 @@ jobs:
     - name: Make edits
       run: go run ./.github/scripts/editformula -tag='${{github.event.inputs.tag}}' -commit=${{steps.tag_commit.outputs.result}}
     - name: Commit changes
+      env:
+        GIT_AUTHOR_NAME: YourBase Infrastructure Bot
+        GIT_AUTHOR_EMAIL: github-infrabot@yourbase.io
       run: git commit -a -m 'Bump yb version to ${{github.event.inputs.tag}}'
     - name: Push changes to branch
       run: "git push origin 'HEAD:bump-${{github.event.inputs.tag}}'"
