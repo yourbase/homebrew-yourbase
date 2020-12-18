@@ -36,7 +36,7 @@ jobs:
         result-encoding: string
         script: |
           const script = require(`${process.env.GITHUB_WORKSPACE}/.github/scripts/tag_commit.js`);
-          return script({github, context});
+          return await script({github, context});
     - name: Download Go
       uses: actions/setup-go@v2
       with:
