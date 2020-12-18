@@ -36,6 +36,7 @@ module.exports = async ({github, context}) => {
   await github.pulls.requestReviewers({
     owner,
     repo,
-    pull_number: createPrResult.number
+    pull_number: createPrResult.number,
+    reviewers: ['zombiezen']
   });
 };
