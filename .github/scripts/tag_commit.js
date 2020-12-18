@@ -14,7 +14,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-module.exports = ({github, context}) => {
+module.exports = async ({github, context}) => {
   const query = `query($tagName: String!) {
     repository(owner: "yourbase", name: "yb") {
       release(tagName: $tagName) {
