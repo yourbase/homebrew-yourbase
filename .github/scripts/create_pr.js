@@ -16,7 +16,7 @@
 
 module.exports = async ({github, context}) => {
   const owner = 'yourbase';
-  const repo = 'yb';
+  const repo = 'homebrew-yourbase';
   const branchRefPrefix = 'refs/heads/';
   if (!context.ref.startsWith(branchRefPrefix)) {
     throw new Error('Cannot create pull request for ' + context.ref);
