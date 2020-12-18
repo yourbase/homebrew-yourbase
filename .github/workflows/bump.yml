@@ -70,6 +70,8 @@ jobs:
       env:
         GIT_AUTHOR_NAME: YourBase Infrastructure Bot
         GIT_AUTHOR_EMAIL: github-infrabot@yourbase.io
+        GIT_COMMITTER_NAME: YourBase Infrastructure Bot
+        GIT_COMMITTER_EMAIL: github-infrabot@yourbase.io
       run: git commit -a -m 'Bump yb version to ${{github.event.inputs.tag}}'
     - name: Push changes to branch
       run: "git push origin 'HEAD:bump-${{github.event.inputs.tag}}'"
