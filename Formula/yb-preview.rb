@@ -33,6 +33,10 @@ class YbPreview < Formula
     ENV["GITHUB_SHA"] = "71bcf82e33b459c896762a5d34f6074ad2866a1d"
     ENV["GO111MODULE"] = "on"
     system "release/build.sh", bin/"yb"
+    mkdir bash_completion
+    system bin/"yb", "gen-complete", "-o", bash_completion/"yb", "bash"
+    mkdir zsh_completion
+    system bin/"yb", "gen-complete", "-o", zsh_completion/"_yb", "zsh"
   end
 
   test do
