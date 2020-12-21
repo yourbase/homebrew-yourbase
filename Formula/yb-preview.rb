@@ -17,8 +17,8 @@
 class YbPreview < Formula
   desc "Build tool optimized for local + remote development"
   homepage "https://yourbase.io/"
-  url "https://github.com/yourbase/yb/archive/v0.6.0-beta1.tar.gz"
-  sha256 "98efb88ef74b85ad0aded32b75222f7bcd915056f0da4cefdad50b1bd8ccfddf"
+  url "https://github.com/yourbase/yb/archive/v0.6.0-beta2.tar.gz"
+  sha256 "7d4dfa989b6cdf7d1274f6ef29fec4e2fa09287719fec62a3c13f484396aebc2"
   license "Apache-2.0"
   head "https://github.com/yourbase/yb.git", branch: "main"
 
@@ -30,9 +30,13 @@ class YbPreview < Formula
   def install
     ENV["VERSION"] = "v" + version.to_s
     ENV["CHANNEL"] = version.to_s.include?("-") ? "preview" : "stable"
-    ENV["GITHUB_SHA"] = "a60e009a7951b08aa21410ceda7a4fab6686a232"
+    ENV["GITHUB_SHA"] = "71bcf82e33b459c896762a5d34f6074ad2866a1d"
     ENV["GO111MODULE"] = "on"
     system "release/build.sh", bin/"yb"
+    mkdir bash_completion
+    system bin/"yb", "gen-complete", "-o", bash_completion/"yb", "bash"
+    mkdir zsh_completion
+    system bin/"yb", "gen-complete", "-o", zsh_completion/"_yb", "zsh"
   end
 
   test do
