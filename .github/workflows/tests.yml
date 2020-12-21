@@ -45,4 +45,4 @@ jobs:
 
       - run: brew test-bot --only-tap-syntax
 
-      - run: brew test-bot --only-formulae yb
+      - run: brew test-bot --only-formulae yb yb-preview
