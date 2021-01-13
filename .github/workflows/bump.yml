@@ -45,10 +45,19 @@ jobs:
       run: git checkout -b bump-${{github.event.inputs.tag}}
     - name: Make edits
       run: go run ./.github/scripts/editformula -tag='${{github.event.inputs.tag}}' -commit=${{steps.tag_commit.outputs.result}}
+    - name: Get author information
+      id: actor_info
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const { data: { name, email } } = await github.users.getByUsername({username: context.actor});
+          console.log(`Found ${name} <${email}> for ${context.actor}`);
+          return { name, email };
     - name: Commit changes
       env:
-        GIT_AUTHOR_NAME: YourBase Infrastructure Bot
-        GIT_AUTHOR_EMAIL: github-infrabot@yourbase.io
+        GIT_AUTHOR_NAME: ${{ fromJson(steps.actor_info.outputs.result).name }}
+        GIT_AUTHOR_EMAIL: ${{ fromJson(steps.actor_info.outputs.result).email }}
         GIT_COMMITTER_NAME: YourBase Infrastructure Bot
         GIT_COMMITTER_EMAIL: github-infrabot@yourbase.io
       run: git commit -a -m 'Bump yb version to ${{github.event.inputs.tag}}'
