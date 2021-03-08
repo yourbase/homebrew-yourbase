@@ -39,12 +39,14 @@ jobs:
           return await script({github, context});
     - name: Download Go
       uses: actions/setup-go@v2
-      with:
-        go-version: '^1.15.6'
     - name: Make new branch
       run: git checkout -b bump-${{github.event.inputs.tag}}
     - name: Make edits
-      run: go run ./.github/scripts/editformula -tag='${{github.event.inputs.tag}}' -commit=${{steps.tag_commit.outputs.result}}
+      run: |
+        (cd .github/scripts/editformula && go build) &&
+        .github/scripts/editformula/editformula \
+          -tag='${{github.event.inputs.tag}}' \
+          -commit=${{steps.tag_commit.outputs.result}}
     - name: Get author information
       id: actor_info
       uses: actions/github-script@v3
