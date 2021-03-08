@@ -41,6 +41,6 @@ class YbPreview < Formula
 
   test do
     version_info = shell_output("#{bin}/yb version")
-    assert_match /stable|preview/, version_info
+    assert_match(/stable|preview/, version_info)
   end
 end
